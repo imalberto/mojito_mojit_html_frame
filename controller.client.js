@@ -42,8 +42,10 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
                 meta.http.headers = meta.http.headers || {};
 
                 // Set the default data
-                data.title = ac.config.get('title');
-                data.mojito_version = Y.mojito.version;
+                meta.store = {
+                    title: ac.config.get('title')
+                };
+//                Y.one('title').setContent(ac.config.get('title'));
 
                 // Add all the assets we have been given to our local store
                 ac.assets.addAssets(meta.assets);

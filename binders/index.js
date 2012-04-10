@@ -74,11 +74,12 @@ YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
                     /*
                      * Now call our controller to see if we know the url
                      */
-                    that.mp.invoke('handleUrlClick', {params:params}, function(err, data){
+                    that.mp.invoke('handleUrlClick', {params:params}, function(err, data, meta){
                         if(err){
                             updateUrl(url, true);
                         } else {
                             updateUrl(url);
+                            YY.one('title').setContent(meta.store.title);
                             YY.one('body').setContent(data);
                         }
                     });
