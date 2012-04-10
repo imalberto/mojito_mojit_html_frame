@@ -80,10 +80,10 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
              */
             command = {
                 instance: {
-                    base: mojitAction[0]
+                    base: mojitAction[0],
+                    action: mojitAction[1] || 'index'
                 },
-                action: mojitAction[1] || 'index',
-                params: { /* TODO: add real params here */},
+                params: ac.params.getAll(),
                 context: ac.context
             };
 
