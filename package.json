@@ -1,0 +1,14 @@
+{
+    "name": "html_frame_mojit",
+    "description": "A Mojito Mojit for handling link clicks in a HTML application. This is a replacement for the HTMLFrameMojit.",
+    "version": "0.0.1",
+    "author": {
+        "name": "Richard S Allinson",
+        "email": "nobody@yahoo-inc.com"
+    },
+    "yahoo": {
+        "mojito": {
+            "version": "*"
+        }
+    }
+}
