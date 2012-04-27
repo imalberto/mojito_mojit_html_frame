@@ -1,5 +1,5 @@
 {
-    "name": "html_frame_mojit",
+    "name": "mojito_mojit_html_frame",
     "description": "A Mojito Mojit for handling link clicks in a HTML application. This is a replacement for the HTMLFrameMojit.",
     "version": "0.0.1",
     "author": {
