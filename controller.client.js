@@ -7,7 +7,7 @@
 /*jslint anon:true, sloppy:true, nomen:true*/
 /*global YUI*/
 
-YUI.add('html_frame_mojit', function(Y, NAME) {
+YUI.add('mojito_mojit_html_frame', function(Y, NAME) {
 
     Y.mojito.controllers[NAME] = {
 
@@ -32,7 +32,7 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
                 assets: ac.config.get('assets')
             };
 
-            Y.log('executing html_frame_mojit child', 'mojito', 'qeperf');
+            Y.log('executing mojito_mojit_html_frame child', 'mojito', 'qeperf');
 
             // Now execute the child as a composite
             ac.composite.execute(cfg, function(data, meta) {
@@ -50,7 +50,7 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
                 // Add all the assets we have been given to our local store
                 ac.assets.addAssets(meta.assets);
 
-                Y.log('html_frame_mojit done()', 'mojito', 'qeperf');
+                Y.log('mojito_mojit_html_frame done()', 'mojito', 'qeperf');
 
                 ac.done(data.child, meta);
             });
@@ -85,7 +85,12 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
                     base: mojitAction[0],
                     action: mojitAction[1] || 'index'
                 },
-                params: ac.params.getAll(),
+                params: {
+                    route: Y.merge(route.query, route.param),
+                    url: Y.QueryString.parse(url.slice(url.indexOf('?') + 1)),
+                    body: {},
+                    file: {}
+                },
                 context: ac.context
             };
 
@@ -96,4 +101,4 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
         }
     };
 
-}, '0.1.0', {requires: ['mojito-url-addon']});
+}, '0.1.0', {requires: ['mojito-url-addon', 'querystring-parse']});

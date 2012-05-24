@@ -9,7 +9,7 @@
 /*global YUI*/
 
 
-YUI.add('html_frame_mojit', function(Y, NAME) {
+YUI.add('mojito_mojit_html_frame', function(Y, NAME) {
 
     var renderListAsHtmlAssets = function(list, type) {
         var i,
@@ -40,13 +40,13 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
      * Adds a binder to meta.binders object
      */
     function addHtmlFrameMojitBinder(meta){
-        meta.binders['html_frame_mojit_node'] = {
-            type: 'html_frame_mojit',
-            viewId: 'html_frame_mojit_node',
-            instanceId: 'html_frame_mojit_node',
-            name: 'html_frame_mojit_binder_index',
+        meta.binders['mojito_mojit_html_frame_node'] = {
+            type: 'mojito_mojit_html_frame',
+            viewId: 'mojito_mojit_html_frame_node',
+            instanceId: 'mojito_mojit_html_frame_node',
+            name: 'mojito_mojit_html_frame_binder_index',
             needs: {
-                "html_frame_mojit_binder_index": "/static/html_frame_mojit/binders/index.js"
+                "mojito_mojit_html_frame_binder_index": "/static/mojito_mojit_html_frame/binders/index.js"
             }
         };
     }
@@ -76,7 +76,7 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
                 assets: ac.config.get('assets')
             };
 
-            Y.log('executing html_frame_mojit child', 'mojito', 'qeperf');
+            Y.log('executing mojito_mojit_html_frame child', 'mojito', 'qeperf');
 
             // Now execute the child as a composite
             ac.composite.execute(cfg, function(data, meta) {
@@ -120,7 +120,7 @@ YUI.add('html_frame_mojit', function(Y, NAME) {
 
                 meta.view = {name: 'index'};
 
-                Y.log('html_frame_mojit done()', 'mojito', 'qeperf');
+                Y.log('mojito_mojit_html_frame done()', 'mojito', 'qeperf');
 
                 ac.done(data, meta);
             });

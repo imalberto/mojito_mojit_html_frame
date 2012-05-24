@@ -2,7 +2,7 @@
  * Copyright (c) 2012 Yahoo! Inc. All rights reserved.
  */
 /*jslint anon:true, sloppy:true, nomen:true*/
-YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
+YUI.add('mojito_mojit_html_frame_binder_index', function(Y, NAME) {
 
     var urlManager;
 
@@ -30,6 +30,18 @@ YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
         }
     }
 
+    function getFormFields(form) {
+
+        var fields = {},
+            input;
+
+        form.all('input').each(function(input) {
+          fields[input.get('name')] = input.get('value');
+        });
+
+        return fields;
+    }
+
     Y.namespace('mojito.binders')[NAME] = {
 
         /**
@@ -38,6 +50,19 @@ YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
          */
         init: function(mp) {
             this.mp = mp;
+        },
+
+        call: function(url, params) {
+
+            this.mp.invoke('handleUrlClick', {params:params}, function(err, data, meta){
+                if(err){
+                    updateUrl(url, true);
+                } else {
+                    updateUrl(url);
+                    Y.one('title').setContent(meta.store.title);
+                    Y.one('body').setContent(data);
+                }
+            });
         },
 
         /**
@@ -62,7 +87,8 @@ YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
                     var url = event.target.get('href'),
                         params = {
                             body: {
-                                url: url
+                                url: url,
+                                form: {}
                             }
                         };
 
@@ -74,17 +100,50 @@ YUI.add('html_frame_mojit_binder_index', function(Y, NAME) {
                     /*
                      * Now call our controller to see if we know the url
                      */
-                    that.mp.invoke('handleUrlClick', {params:params}, function(err, data, meta){
-                        if(err){
-                            updateUrl(url, true);
-                        } else {
-                            updateUrl(url);
-                            YY.one('title').setContent(meta.store.title);
-                            YY.one('body').setContent(data);
-                        }
-                    });
+                    that.call(url, params);
                     
                 }, 'a');
+
+                /*
+                 * Listen for submit on "form" nodes
+                 */
+                YY.one('body').delegate('submit', function(event){
+
+                    var url = event.target.get('action'),
+                        params = {
+                            body: {
+                                url: url,
+                                form: getFormFields(event.target)
+                            }
+                        };
+
+                    // If the form method is GET add the from fields to the URL
+                    if (event.target.get('method').toUpperCase() === 'GET') {
+
+                        if (url.indexOf('?') >= 0) {
+                            params.body.url += '&';
+                        } else {
+                            params.body.url += '?';
+                        }
+
+                        Y.Object.each(params.body.form, function(val, key) {
+                            params.body.url += key + '=' + val;
+                        });
+
+                        params.body.form = {};
+                    }
+
+                    /*
+                     * Stop the Form from being sent
+                     */
+                    event.preventDefault();
+
+                    /*
+                     * Now call our controller to see if we know the url
+                     */
+                    that.call(url, params);
+
+                }, 'form');
                 
             });
         }
